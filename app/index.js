@@ -33,6 +33,21 @@ function generateCardList() {
                         </div>
                         `;
     }
+    const cardAreaArr = document.querySelectorAll(".card-area");
+
+    setTimeout(() => {
+
+        for (const card of cardAreaArr) {
+            card.classList.add("flip");
+        }
+    }, 1000);
+
+    setTimeout(() => {
+
+        for (const card of cardAreaArr) {
+            card.classList.remove("flip");
+        }
+    }, 5000);
 }
 
 
@@ -43,6 +58,12 @@ function shuffleArr(arr) {
     }
     return arr;
 }
+
+
+// function same(){
+//     같은 카드 맞추면 없어지기 클래스리스트 타겟 -> 자식의자식의 innerHTML => 변수에 담기
+// hidden none 
+// }
 
 function setListenerToCard() {
     const cardAreaArr = document.querySelectorAll(".card-area");
@@ -58,7 +79,6 @@ function setListenerToCard() {
             }, 2000)
         });
     }
-
 }
 
 function handleClick() {
@@ -67,3 +87,5 @@ function handleClick() {
     setListenerToCard();
 
 }
+
+
