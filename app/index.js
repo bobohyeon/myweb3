@@ -6,6 +6,12 @@
 
 const main = document.querySelector("main");
 
+
+let firstCard = null;
+let SecondCard = null;
+let canClick = false; //논리값으로 다음단계로 못 넘어가게 하기, 클릭이 안되는거로 보임
+
+
 function generateCardList() {
     const inputCardCnt = document.querySelector("#cardCnt").value;
     if (inputCardCnt > 28) {
@@ -35,6 +41,8 @@ function generateCardList() {
     }
     const cardAreaArr = document.querySelectorAll(".card-area");
 
+    canClick = false;
+
     setTimeout(() => {
 
         for (const card of cardAreaArr) {
@@ -47,7 +55,11 @@ function generateCardList() {
         for (const card of cardAreaArr) {
             card.classList.remove("flip");
         }
+
+        canClick = true;
     }, 5000);
+
+
 }
 
 
@@ -59,27 +71,33 @@ function shuffleArr(arr) {
     return arr;
 }
 
-
-// function same(){
-//     같은 카드 맞추면 없어지기 클래스리스트 타겟 -> 자식의자식의 innerHTML => 변수에 담기
-// hidden none 
-// }
-
 function setListenerToCard() {
     const cardAreaArr = document.querySelectorAll(".card-area");
 
     for (const cardArea of cardAreaArr) {
         cardArea.addEventListener("click", function (evt) {
 
-            const temp = evt.currentTarget;
-            temp.classList.toggle("flip");
+            // card-area의 상태가 flip 으로 바뀐 첫번째 카드와 두번째 카드의
+            // card-back 숫자가 같으면 없애기
 
-            setTimeout(() => {
-                temp.classList.toggle("flip");
-            }, 2000)
+            if (!canClick) return;
+
+            if (cardArea.classList.contains("flip")) return;
+
+            cardArea.classList.add("flip");
+
+            if (firstCard == null) {
+                firstCard = cardArea;
+                return;
+            }
+
+            SecondCard = cardArea;
+            canClick = false;
         });
     }
 }
+
+
 
 function handleClick() {
 
